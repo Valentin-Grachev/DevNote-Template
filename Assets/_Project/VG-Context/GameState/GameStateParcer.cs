@@ -10,7 +10,7 @@ namespace VG2
         private const string adsEnabledKey = "adsEnabled";
 
 
-        public static void Parse(StartValuesConfig startValuesConfig, Dictionary<string, string> data)
+        public static void Parse(Dictionary<string, string> data)
         {
             GameState.lastOnlineTime = data.ContainsKey(lastOnlineTimeKey) ?
                 DateTime.Parse(data[lastOnlineTimeKey]) : DateTime.Now;

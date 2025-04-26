@@ -14,9 +14,6 @@ namespace VG2
 
         private static bool _savesDeleted = false;
 
-
-        [SerializeField] private StartValuesConfig _startValues;
-
         protected override string managerName => "VG Saves";
 
 
@@ -25,7 +22,7 @@ namespace VG2
             _instance = this;
 
             var dataDictionary = GameStateEncoder.Decode(service.GetData(), _instance._debugLogs);
-            GameStateParcer.Parse(_instance._startValues, dataDictionary);
+            GameStateParcer.Parse(dataDictionary);
 
             Initialized = true;
         }
