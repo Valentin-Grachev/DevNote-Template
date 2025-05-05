@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using VG2;
 
 namespace DevNote.Utils
 {
@@ -24,7 +25,7 @@ namespace DevNote.Utils
 
             else
             {
-                poolObject = Object.Instantiate(_prefab);
+                poolObject = SceneContainer.InstantiatePrefabFromComponent(_prefab);
                 _poolObjects.Add(poolObject);
             }
 
