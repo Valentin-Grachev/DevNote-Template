@@ -4434,7 +4434,7 @@ GameObject:
   - component: {fileID: 8083916536868264514}
   - component: {fileID: 6156771806708539763}
   m_Layer: 0
-  m_Name: Interface
+  m_Name: BootUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5054,7 +5054,6 @@ MonoBehaviour:
   _services:
   - {fileID: 8197715244563328197}
   - {fileID: 3277103237295728314}
-  _startValues: {fileID: 11400000, guid: a2f45fc337881094898add3a0873742f, type: 2}
 --- !u!114 &7711974220711061063
 MonoBehaviour:
   m_ObjectHideFlags: 0
