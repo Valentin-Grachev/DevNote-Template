@@ -1,3 +1,4 @@
+using DevNote.Utils;
 using UnityEngine;
 
 namespace VG2
@@ -7,6 +8,13 @@ namespace VG2
         [SerializeField] private float _autosaveTimeInterval = 1f;
 
         private float _timeToAutosave;
+
+        private void Awake()
+        {
+            WebHandler.onPageBeforeUnload += Saves.Save;
+            WebHandler.onPageHidden += Saves.Save;
+        }
+
 
         private void Start()
         {

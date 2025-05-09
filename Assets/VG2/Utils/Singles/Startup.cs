@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.LowLevel;
-using UnityEngine.SceneManagement;
 
 
 namespace VG2
@@ -50,7 +49,6 @@ namespace VG2
 
             if (allInitialized)
             {
-                SceneManager.LoadScene(1);
                 Loaded = true;
                 onLoaded?.Invoke();
             }
