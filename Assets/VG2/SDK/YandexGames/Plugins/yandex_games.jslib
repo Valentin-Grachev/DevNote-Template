@@ -146,7 +146,7 @@ mergeInto(LibraryManager.library, {
 
     // === Обработка ===
     player.setData({
-      data: UTF8ToString(savesData),
+      data: UTF8ToString(savesData), flush: false,
     }).then(() => {
       unity.SendMessage('YandexGames', 'HTML_OnSavesSent', 1);
       console.log('Player saves sent');

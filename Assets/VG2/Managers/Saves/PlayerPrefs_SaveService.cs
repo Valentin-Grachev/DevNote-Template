@@ -9,20 +9,13 @@ namespace VG2
         [SerializeField] private bool _onlyEditor;
 
 
-        public override bool supported
-        {
-            get
-            {
-                if (_onlyEditor) return Environment.editor;
-                else return true;
-            }
-        }
+        public override bool supported => _onlyEditor ? Environment.editor : true;
 
-        public override void Commit(string data, Action<bool> onCommited)
+        public override void SaveLocal(string data)
         {
             PlayerPrefs.SetString("data", data);
             PlayerPrefs.Save();
-            onCommited?.Invoke(true);
+            //onCommited?.Invoke(true);
         }
 
         public override string GetData() => PlayerPrefs.GetString("data", string.Empty);

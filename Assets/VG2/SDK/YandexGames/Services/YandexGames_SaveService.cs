@@ -15,8 +15,8 @@ namespace VG2
             Environment.platform == Environment.Platform.WebGL && !Environment.editor;
 
 
-        public override void Commit(string data, Action<bool> onCommited)
-            => YG_Saves.SendSaves(data, (success) => onCommited?.Invoke(success));
+        public override void SaveLocal(string data)
+            => YG_Saves.SendSaves(data, null);
 
 
 

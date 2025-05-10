@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 using VG2.Internal;
 
 namespace VG2
@@ -27,28 +26,20 @@ namespace VG2
             Initialized = true;
         }
 
-        public static void Save()
+        public static void Save(bool isImportant = false)
         {
             if (_savesDeleted) return;
 
             var gameStateData = GameStateParcer.ToDataString();
             var encodedData = GameStateEncoder.Encode(gameStateData);
 
-            service.Commit(encodedData, (success) =>
-            {
-                if (success) _instance.Log("Saves commited.");
-                else _instance.Log("Saves not commited.");
-            });
+            service.SaveLocal(encodedData);
         }
 
         public static void Delete()
         {
             _instance.Log("Delete.");
-            service.Commit(string.Empty, (success) => 
-            {
-                if (success) 
-                    _instance.Log("Saves deleted.");
-            });
+            service.SaveLocal(string.Empty);
 
             _savesDeleted = true;
             onDeleted?.Invoke();

@@ -5,20 +5,16 @@ namespace VG2
 {
     public class Autosave : MonoBehaviour
     {
-        [SerializeField] private float _autosaveTimeInterval = 1f;
+        private const float LOCAL_SAVE_COOLDOWN = 1f;
+        private const float CLOUD_SAVE_COOLDOWN = 60f;
 
-        private float _timeToAutosave;
+        private float _timeToLocalSave = LOCAL_SAVE_COOLDOWN;
+        private float _timeToCloudSave = CLOUD_SAVE_COOLDOWN;
 
         private void Awake()
         {
-            WebHandler.onPageBeforeUnload += Saves.Save;
-            WebHandler.onPageHidden += Saves.Save;
-        }
-
-
-        private void Start()
-        {
-            _timeToAutosave = _autosaveTimeInterval;
+            WebHandler.onPageBeforeUnload += () => Saves.Save();
+            WebHandler.onPageHidden += () => Saves.Save();
         }
 
         private void Update()
@@ -26,12 +22,19 @@ namespace VG2
             if (!Startup.Loaded) return;
 
 
-            _timeToAutosave -= Time.unscaledDeltaTime;
+            _timeToLocalSave -= Time.unscaledDeltaTime;
+            _timeToCloudSave -= Time.unscaledDeltaTime;
 
-            if (_timeToAutosave < 0f)
+            if (_timeToLocalSave < 0f)
             {
-                _timeToAutosave = _autosaveTimeInterval;
+                _timeToLocalSave = LOCAL_SAVE_COOLDOWN;
                 Saves.Save();
+            }
+
+            if (_timeToCloudSave < 0f)
+            {
+                _timeToCloudSave = CLOUD_SAVE_COOLDOWN;
+                Saves.Save(isImportant: true);
             }
         }
 
