@@ -1,6 +1,6 @@
 namespace DevNote
 {
-    public interface IReview
+    public interface IReview : IInitializable, ISelectableService
     {
 
         public void Request();

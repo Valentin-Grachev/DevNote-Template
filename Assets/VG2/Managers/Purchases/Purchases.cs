@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using DevNote;
 using UnityEngine;
 using VG2.Internal;
 

@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using R3;
 
-namespace VG2
+namespace DevNote
 {
     public static class GameStateParcer
     {
@@ -15,7 +14,7 @@ namespace VG2
             GameState.lastOnlineTime = data.ContainsKey(lastOnlineTimeKey) ?
                 DateTime.Parse(data[lastOnlineTimeKey]) : DateTime.Now;
 
-            GameState.adsEnabled = new ReactiveProperty<bool>
+            GameState.adsEnabled = new ReactiveValue<bool>
                 (data.ContainsKey(adsEnabledKey) ? bool.Parse(data[adsEnabledKey]) : true);
 
         }

@@ -1,19 +1,14 @@
-using VG2;
+using DevNote;
 using Zenject;
 
 public class MainSceneInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        new SceneContainer(Container);
-        var gameTime = new GameTime();
+        new SceneInjector(Container);
 
-        var test = Bind(new TestController());
-        
-        
 
-        
-        
+
     }
 
 

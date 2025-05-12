@@ -5,5 +5,10 @@ namespace DevNote
     {
         
     }
+
+    public class AnalyticsParameters
+    {
+
+    }
 }
 

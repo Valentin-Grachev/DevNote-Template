@@ -1,6 +1,6 @@
+using DevNote;
 using TMPro;
 using UnityEngine;
-using R3;
 
 
 namespace VG2
@@ -15,9 +15,14 @@ namespace VG2
 
         protected override void Subscribe()
         {
-            disposables.Add(Localization.onLanguageChanged.Subscribe(_ => Display()));
-            if (_useToken)
-                disposables.Add(Localization.onTokenChanged.Subscribe(_ => Display()));
+            Localization.onLanguageChanged += Display;
+            if (_useToken) Localization.onTokenChanged += Display;
+        }
+
+        protected override void Dispose()
+        {
+            Localization.onLanguageChanged -= Display;
+            if (_useToken) Localization.onTokenChanged -= Display;
         }
 
         protected override void Display()
@@ -34,6 +39,10 @@ namespace VG2
         {
             _key = key;
             _useToken = useToken;
+
+            Dispose();
+            Subscribe();
+
             Display();
         }
 
@@ -43,9 +52,7 @@ namespace VG2
             if (TryGetComponent<TextMeshProUGUI>(out var text)) text.text = $"<{_key}>";
         }
 
-
-
-
+        
     }
 }
 

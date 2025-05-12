@@ -2,8 +2,10 @@ using VG2;
 
 namespace DevNote
 {
-    public interface IEnvironment
+    public interface IEnvironment : IInitializable, ISelectableService
     {
+        public static bool IsTest { get; set; }
+
         public static PlatformType PlatformType
         {
             get
@@ -38,7 +40,7 @@ namespace DevNote
             }
         }
 
-        public bool IsTest { get; }
+        
         public Language CurrentLanguage { get; }
         public ControlType ControlType { get; }
         public void GameReady();

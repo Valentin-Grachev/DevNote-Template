@@ -1,4 +1,5 @@
 using System;
+using DevNote;
 using VG2.Internal;
 
 namespace VG2

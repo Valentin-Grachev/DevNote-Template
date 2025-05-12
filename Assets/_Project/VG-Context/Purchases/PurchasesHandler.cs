@@ -1,4 +1,6 @@
-namespace VG2
+using VG2;
+
+namespace DevNote
 {
     public static class PurchasesHandler
     {

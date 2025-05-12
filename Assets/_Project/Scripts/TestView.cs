@@ -1,14 +1,22 @@
 using DevNote;
 using UnityEngine;
 using UnityEngine.UI;
-using VG2;
 using Zenject;
 
 public class TestView : MonoBehaviour
 {
     [SerializeField] private Button _button;
 
-    [Inject] private readonly ISave save;
+    private ISave save;
+
+
+    
+    [Inject] private void Construct(ISave save)
+    {
+        this.save = save;
+    }
+    
+
 
     private void Start()
     {
@@ -20,8 +28,6 @@ public class TestView : MonoBehaviour
     {
         GameState.adsEnabled.Value = !GameState.adsEnabled.Value;
         _button.image.color = GameState.adsEnabled.Value ? Color.green : Color.red;
-
-        Debug.Log(save.GetData());
     }
 
 

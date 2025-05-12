@@ -6,7 +6,7 @@ using System.Text;
 using UnityEngine;
 
 
-namespace VG2
+namespace DevNote
 {
     public static class GameStateEncoder
     {
@@ -14,14 +14,14 @@ namespace VG2
         public const char keyValuePairSeparator = ';';
 
 
-        public static Dictionary<string, string> Decode(string compressedData, bool useLogs)
+        public static Dictionary<string, string> Decode(string compressedData, bool showLogs = false)
         {
             if (compressedData == string.Empty) 
                 return new Dictionary<string, string>();
 
             string originData = Decompress(compressedData);
 
-            if (useLogs) Debug.Log($"[{nameof(GameStateEncoder)}] {originData}");
+            if (showLogs) Debug.Log($"[{nameof(GameStateEncoder)}] {originData}");
 
             if (originData == string.Empty) 
                 return new Dictionary<string, string>();

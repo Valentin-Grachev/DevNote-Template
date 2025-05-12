@@ -1,11 +1,10 @@
 using System;
-using R3;
 
-namespace VG2
+namespace DevNote
 {
     public static class GameState
     {
-        public static ReactiveProperty<bool> adsEnabled;
+        public static ReactiveValue<bool> adsEnabled;
         public static DateTime lastOnlineTime;
 
     }

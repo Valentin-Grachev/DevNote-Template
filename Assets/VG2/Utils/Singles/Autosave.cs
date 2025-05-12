@@ -1,4 +1,4 @@
-using DevNote.Utils;
+using DevNote;
 using UnityEngine;
 
 namespace VG2

@@ -15,7 +15,7 @@ namespace VG2
         [SerializeField] private List<Table> _tables;
         [SerializeField] private List<LoadableFromTable> _loadables;
 
-        private Dictionary<string, Table> tables;
+        private Dictionary<string, Table> tablesDictionary;
 
         private static GoogleTables instance;
 
@@ -49,11 +49,11 @@ namespace VG2
         [Button("Load Data")]
         private void RequestData()
         {
-            tables = new Dictionary<string, Table>();
+            tablesDictionary = new Dictionary<string, Table>();
 
             foreach (var table in _tables)
             {
-                tables.Add(table.key, table);
+                tablesDictionary.Add(table.key, table);
                 StartCoroutine(table.RequestData());
             }
 
@@ -102,7 +102,7 @@ namespace VG2
 #if UNITY_EDITOR
                 EditorUtility.SetDirty(loadable);
 #endif
-                loadable.LoadData(tables);
+                loadable.LoadData(tablesDictionary);
             }
 
 #if UNITY_EDITOR

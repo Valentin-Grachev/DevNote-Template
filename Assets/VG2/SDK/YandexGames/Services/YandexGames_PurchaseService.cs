@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using VG2.YandexGames;
 using UnityEngine;
+using DevNote;
 
 
 namespace VG2

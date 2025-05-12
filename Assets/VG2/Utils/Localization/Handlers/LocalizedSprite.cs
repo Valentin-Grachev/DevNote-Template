@@ -1,6 +1,6 @@
+using DevNote;
 using UnityEngine;
 using UnityEngine.Events;
-using R3;
 
 
 namespace VG2
@@ -12,7 +12,12 @@ namespace VG2
 
         protected override void Subscribe()
         {
-            disposables.Add(Localization.onLanguageChanged.Subscribe(_ => Display()));
+            Localization.onLanguageChanged += Display;
+        }
+
+        protected override void Dispose()
+        {
+            Localization.onLanguageChanged -= Display;
         }
 
 

@@ -3,9 +3,13 @@ using UnityEngine;
 
 namespace DevNote
 {
-    public class TestAnalyticsService : MonoBehaviour, IAnalytics, ISelectableService
+    public class TestAnalyticsService : MonoBehaviour, IAnalytics
     {
+        public bool Initialized => true;
+
         bool ISelectableService.Available => true;
+
+        public void Initialize() { }
 
         void IAnalytics.SendEvent(EventKey eventKey, Dictionary<string, object> parameters)
         {

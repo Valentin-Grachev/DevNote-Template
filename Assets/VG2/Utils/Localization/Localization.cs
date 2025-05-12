@@ -1,6 +1,6 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using R3;
 using UnityEngine;
 
 
@@ -11,8 +11,8 @@ namespace VG2
     {
         private static Localization instance;
 
-        public static readonly Subject<Unit> onLanguageChanged = new Subject<Unit>();
-        public static readonly Subject<Unit> onTokenChanged = new Subject<Unit>();
+        public static event Action onLanguageChanged;
+        public static event Action onTokenChanged;
 
         [SerializeField] private GoogleTables _googleTables;
         [Space(10)]
@@ -41,7 +41,7 @@ namespace VG2
 
 
             currentLanguage = selectedLanguage;
-            onLanguageChanged.OnNext(Unit.Default);
+            onLanguageChanged?.Invoke();
         }
 
         public override void Initialize()
@@ -92,7 +92,7 @@ namespace VG2
         public static void SetToken(string key, string value)
         {
             instance._tokenData.tokens[key] = value;
-            onTokenChanged.OnNext(Unit.Default);
+            onTokenChanged?.Invoke();
         }
 
     }
