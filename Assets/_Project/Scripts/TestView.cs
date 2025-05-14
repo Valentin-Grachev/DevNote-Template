@@ -1,10 +1,22 @@
+using DevNote;
 using UnityEngine;
 using UnityEngine.UI;
-using VG2;
+using Zenject;
 
 public class TestView : MonoBehaviour
 {
     [SerializeField] private Button _button;
+
+    private ISave save;
+
+
+    
+    [Inject] private void Construct(ISave save)
+    {
+        this.save = save;
+    }
+    
+
 
     private void Start()
     {
