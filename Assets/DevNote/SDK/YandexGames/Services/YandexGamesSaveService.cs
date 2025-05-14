@@ -7,11 +7,14 @@ namespace DevNote.Services.YandexGames
 {
     public class YandexGamesSaveService : MonoBehaviour, ISave
     {
+        public event Action onSavesDeleted;
+
+
         private bool _initialized = false;
 
         private const string LOCAL_DATA_KEY = "data";
 
-
+        
         bool ISelectableService.Available => YG_Sdk.ServicesIsSupported;
 
         bool IInitializable.Initialized => _initialized;
@@ -57,7 +60,11 @@ namespace DevNote.Services.YandexGames
         {
             YG_Saves.SendSaves(string.Empty, onSavesSent: (success) =>
             {
-                if (success) onSuccess?.Invoke();
+                if (success)
+                {
+                    onSuccess?.Invoke();
+                    onSavesDeleted?.Invoke();
+                }
                 else onError?.Invoke();
             });
         }

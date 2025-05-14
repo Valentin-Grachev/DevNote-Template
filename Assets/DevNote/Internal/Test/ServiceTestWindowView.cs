@@ -85,7 +85,7 @@ namespace DevNote
             _analyticsSelectedServiceText.text = analytics.GetType().Name.Replace("AnalyticsService", string.Empty);
             _reviewSelectedServiceText.text = review.GetType().Name.Replace("ReviewService", string.Empty);
 
-            string testValue = IEnvironment.IsTest ? "???????" : "????????";
+            string testValue = IEnvironment.IsTest ? "Active" : "Disabled";
             _environmentTestEnabledText.text = _environmentTestEnabledText.text.Replace("<test>", testValue);
 
             string environmentTypeValue = IEnvironment.EnvironmentType.ToString();

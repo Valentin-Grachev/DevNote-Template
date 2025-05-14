@@ -29,15 +29,19 @@ public class ProjectInstaller : MonoInstaller
         IEnvironment.IsTest = _testVersion;
         IEnvironment.EnvironmentType = _environmentType;
 
-        var environment = RunServiceInitialization<IEnvironment>();
+        var environment = SelectAndBindService<IEnvironment>();
+        var save = SelectAndBindService<ISave>();
+        var purchase = SelectAndBindService<IPurchase>();
+        var ads = SelectAndBindService<IAds>();
+        var analytics = SelectAndBindService<IAnalytics>();
+        var review = SelectAndBindService<IReview>();
 
-        Container.Bind<ISave>().FromInstance(RunServiceInitialization<ISave>()).AsSingle();
-        Container.Bind<IEnvironment>().FromInstance(environment).AsSingle();
-        Container.Bind<IPurchase>().FromInstance(RunServiceInitialization<IPurchase>()).AsSingle();
-        Container.Bind<IAds>().FromInstance(RunServiceInitialization<IAds>()).AsSingle();
-        Container.Bind<IAnalytics>().FromInstance(RunServiceInitialization<IAnalytics>()).AsSingle();
-        Container.Bind<IReview>().FromInstance(RunServiceInitialization<IReview>()).AsSingle();
-
+        RunInitialization(environment);
+        RunInitialization(save);
+        RunInitialization(ads);
+        RunInitialization(purchase);
+        RunInitialization(analytics);
+        RunInitialization(review);
         RunInitialization(_sound);
         RunInitialization(_googleTables);
         RunInitialization(_localization);
@@ -49,6 +53,14 @@ public class ProjectInstaller : MonoInstaller
 
         environment.GameReady();
     }
+
+    private T SelectAndBindService<T>() where T : class
+    {
+        var service = _serviceSelector.GetServiceInterface<T>();
+        Container.Bind<T>().FromInstance(service).AsSingle();
+        return service;
+    }
+
 
 
     private UniTask WaitFullInitialization() => UniTask.WaitUntil(() =>
@@ -71,10 +83,10 @@ public class ProjectInstaller : MonoInstaller
         return service;
     }
 
-    private void RunInitialization<T>(T util) where T : DevNote.IInitializable
+    private void RunInitialization(DevNote.IInitializable initializable)
     {
-        util.Initialize();
-        _initializables.Add(util);
+        initializable.Initialize();
+        _initializables.Add(initializable);
     }
 
 

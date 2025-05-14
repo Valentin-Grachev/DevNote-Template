@@ -5,20 +5,26 @@ namespace DevNote
 {
     public class Autosave : MonoBehaviour
     {
+        [SerializeField] private float _localSaveCooldown = 1f;
+        [SerializeField] private float _cloudSaveCooldown = 60f;
+
         [Inject] private readonly ISave save;
 
-
-        private const float LOCAL_SAVE_COOLDOWN = 1f;
-        private const float CLOUD_SAVE_COOLDOWN = 60f;
-
-        private float _timeToLocalSave = LOCAL_SAVE_COOLDOWN;
-        private float _timeToCloudSave = CLOUD_SAVE_COOLDOWN;
+        private float _timeToLocalSave;
+        private float _timeToCloudSave;
 
         private void Awake()
         {
             WebHandler.onPageBeforeUnload += () => save.SaveLocal();
             WebHandler.onPageHidden += () => save.SaveLocal();
         }
+
+        private void Start()
+        {
+            _timeToLocalSave = _localSaveCooldown;
+            _timeToCloudSave = _cloudSaveCooldown;
+        }
+
 
         private void Update()
         {
@@ -29,13 +35,13 @@ namespace DevNote
 
             if (_timeToLocalSave < 0f)
             {
-                _timeToLocalSave = LOCAL_SAVE_COOLDOWN;
+                _timeToLocalSave = _localSaveCooldown;
                 save.SaveLocal();
             }
 
             if (_timeToCloudSave < 0f)
             {
-                _timeToCloudSave = CLOUD_SAVE_COOLDOWN;
+                _timeToCloudSave = _cloudSaveCooldown;
                 save.SaveCloud();
             }
         }

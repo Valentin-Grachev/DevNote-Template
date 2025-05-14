@@ -16,7 +16,8 @@ namespace DevNote.Services.YandexGames
         bool IInitializable.Initialized => _initialized;
         async void IInitializable.Initialize()
         {
-            Instantiate(_yandexGamesSdkPrefab, parent: null);
+            var sdkObject = Instantiate(_yandexGamesSdkPrefab, parent: null);
+            sdkObject.name = sdkObject.name.Replace("(Clone)", string.Empty);
 
             await UniTask.WaitUntil(() => YG_Sdk.available);
 

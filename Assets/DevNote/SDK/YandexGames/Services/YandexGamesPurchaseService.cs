@@ -24,9 +24,9 @@ namespace DevNote.Services.YandexGames
 
         async void IInitializable.Initialize()
         {
-            save.onSavesDeleted += OnSavesDeleted;
-
             await UniTask.WaitUntil(() => YG_Purchases.available && save.Initialized);
+
+            save.onSavesDeleted += OnSavesDeleted;
 
             YG_Purchases.InitializePayments();
 
