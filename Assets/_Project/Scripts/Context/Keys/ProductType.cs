@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace DevNote
 {
-    public enum ProductKey
+    public enum ProductType
     {
         None = 0,
         NoAds = 1,
@@ -10,12 +10,12 @@ namespace DevNote
 
     public static class ProductCatalog
     {
-        private static readonly Dictionary<ProductKey, bool> isConsumableProducts = new Dictionary<ProductKey, bool>
+        private static readonly Dictionary<ProductType, bool> isConsumableProducts = new Dictionary<ProductType, bool>
         {
-            { ProductKey.NoAds, false },
+            { ProductType.NoAds, false },
         };
 
-        public static bool IsConsumable(ProductKey productKey) => isConsumableProducts[productKey];
+        public static bool IsConsumable(ProductType productType) => isConsumableProducts[productType];
 
 
     }
