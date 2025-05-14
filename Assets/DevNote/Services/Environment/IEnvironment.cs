@@ -1,10 +1,10 @@
-using VG2;
-
 namespace DevNote
 {
     public interface IEnvironment : IInitializable, ISelectableService
     {
         public static bool IsTest { get; set; }
+        public static EnvironmentType EnvironmentType { get; set; }
+        public static bool ShowAds { get; set; } = true;
 
         public static PlatformType PlatformType
         {

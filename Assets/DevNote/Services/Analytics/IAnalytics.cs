@@ -5,7 +5,7 @@ namespace DevNote
     public interface IAnalytics : IInitializable, ISelectableService
     {
         
-        public void SendEvent(EventKey eventKey, Dictionary<string, object> parameters = null);
+        public void SendEvent(string eventKey, Dictionary<string, object> parameters = null);
 
 
     }

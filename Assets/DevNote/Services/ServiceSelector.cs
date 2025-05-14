@@ -9,6 +9,7 @@ namespace DevNote
         [SerializeField] private List<MonoBehaviour> _environmentServices;
         [SerializeField] private List<MonoBehaviour> _saveServices;
         [SerializeField] private List<MonoBehaviour> _adsServices;
+        [SerializeField] private List<MonoBehaviour> _purchaseServices;
         [SerializeField] private List<MonoBehaviour> _analyticsServices;
         [SerializeField] private List<MonoBehaviour> _reviewServices;
         
@@ -23,11 +24,12 @@ namespace DevNote
                 Type t when t == typeof(IReview) => GetAvailableService<IReview>(_reviewServices) as T,
                 Type t when t == typeof(IEnvironment) => GetAvailableService<IEnvironment>(_environmentServices) as T,
                 Type t when t == typeof(IAnalytics) => GetAvailableService<IAnalytics>(_analyticsServices) as T,
+                Type t when t == typeof(IPurchase) => GetAvailableService<IPurchase>(_purchaseServices) as T,
                 _ => null
             };
 
             if (service == null)
-                throw new Exception($"{Const.LogPrefix} Wrong service type : {nameof(T)}");
+                throw new Exception($"{Const.LOG_PREFIX} Wrong service type : {nameof(T)}");
 
 
             return service;
@@ -38,7 +40,7 @@ namespace DevNote
             foreach (var service in services)
                 if ((service as ISelectableService).Available) return service as T;
 
-            throw new Exception($"{Const.LogPrefix} Available service does'nt exist: {nameof(T)}");
+            throw new Exception($"{Const.LOG_PREFIX} Available service does'nt exist: {nameof(T)}");
         }
 
 

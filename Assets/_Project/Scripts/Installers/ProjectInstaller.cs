@@ -10,8 +10,12 @@ public class ProjectInstaller : MonoInstaller
     public static DiContainer ProjectContainer { get; private set; }
 
     [SerializeField] private bool _testVersion;
+    [SerializeField] private EnvironmentType _environmentType;
+    [Space(10)]
     [SerializeField] private ServiceSelector _serviceSelector;
     [SerializeField] private Sound _sound;
+    [SerializeField] private GoogleTables _googleTables;
+    [SerializeField] private Localization _localization;
     [SerializeField] private List<GameObject> _onlyBootstrapGameObject;
     
     private List<DevNote.IInitializable> _initializables = new();
@@ -23,23 +27,27 @@ public class ProjectInstaller : MonoInstaller
         SetActiveRootGameObjects(false);
 
         IEnvironment.IsTest = _testVersion;
+        IEnvironment.EnvironmentType = _environmentType;
 
         var environment = RunServiceInitialization<IEnvironment>();
 
-        Container.Bind<ISave>().FromInstance(RunServiceInitialization<ISave>());
-        Container.Bind<IEnvironment>().FromInstance(environment);
-        Container.Bind<IAds>().FromInstance(RunServiceInitialization<IAds>());
-        Container.Bind<IAnalytics>().FromInstance(RunServiceInitialization<IAnalytics>());
-        Container.Bind<IReview>().FromInstance(RunServiceInitialization<IReview>());
+        Container.Bind<ISave>().FromInstance(RunServiceInitialization<ISave>()).AsSingle();
+        Container.Bind<IEnvironment>().FromInstance(environment).AsSingle();
+        Container.Bind<IPurchase>().FromInstance(RunServiceInitialization<IPurchase>()).AsSingle();
+        Container.Bind<IAds>().FromInstance(RunServiceInitialization<IAds>()).AsSingle();
+        Container.Bind<IAnalytics>().FromInstance(RunServiceInitialization<IAnalytics>()).AsSingle();
+        Container.Bind<IReview>().FromInstance(RunServiceInitialization<IReview>()).AsSingle();
 
-        RunUtilInitialization(_sound);
+        RunInitialization(_sound);
+        RunInitialization(_googleTables);
+        RunInitialization(_localization);
 
         await WaitFullInitialization();
 
-        environment.GameReady();
-
         SetActiveRootGameObjects(true);
         _onlyBootstrapGameObject.ForEach(gameObject => gameObject.SetActive(false));
+
+        environment.GameReady();
     }
 
 
@@ -63,7 +71,7 @@ public class ProjectInstaller : MonoInstaller
         return service;
     }
 
-    private void RunUtilInitialization<T>(T util) where T : DevNote.IInitializable
+    private void RunInitialization<T>(T util) where T : DevNote.IInitializable
     {
         util.Initialize();
         _initializables.Add(util);

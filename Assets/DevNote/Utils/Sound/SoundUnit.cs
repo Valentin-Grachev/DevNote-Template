@@ -52,6 +52,9 @@ namespace DevNote
         public float pitch => _useRandomPitch ?
             Random.Range(_randomPitch.x, _randomPitch.y) : _pitch;
 
+
+        public void Play() => Sound.Play(name);
+
     }
 
 

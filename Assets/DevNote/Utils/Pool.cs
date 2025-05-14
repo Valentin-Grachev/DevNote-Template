@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using VG2;
 
 namespace DevNote
 {
