@@ -4,12 +4,12 @@ namespace DevNote
 {
     public static class PurchaseHandler
     {
-        public static void HandlePurchase(ProductKey key)
+        public static void HandlePurchase(ProductType key)
         {
             
             switch (key)
             {
-                case ProductKey.NoAds:
+                case ProductType.NoAds:
                     GameState.adsEnabled.Value = false;
                     break;
 

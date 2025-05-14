@@ -311,7 +311,7 @@ mergeInto(LibraryManager.library, {
     InitPlayer();
   },
 
-  InitializePayments: function () {
+  _InitializePayments: function () {
     InitPayments();
   },
 

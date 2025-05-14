@@ -5,17 +5,23 @@ namespace DevNote.Services.Starter
 {
     public class TestPurchaseService : MonoBehaviour, IPurchase
     {
+        public event IPurchase.OnPurchaseHandled onPurchaseHandled;
+
+
         bool IInitializable.Initialized => true;
 
         bool ISelectableService.Available => true;
 
-        string IPurchase.GetPriceString(ProductKey productKey) => $"${productKey}";
+        
+
+        string IPurchase.GetPriceString(ProductType productType) => $"${productType}";
 
         void IInitializable.Initialize() { }
 
-        void IPurchase.Purchase(ProductKey productKey, Action onSuccess, Action onError)
+        void IPurchase.Purchase(ProductType productType, Action onSuccess, Action onError)
         {
-            PurchaseHandler.HandlePurchase(productKey);
+            PurchaseHandler.HandlePurchase(productType);
+            onPurchaseHandled?.Invoke(true);
             onSuccess?.Invoke();
         }
     }

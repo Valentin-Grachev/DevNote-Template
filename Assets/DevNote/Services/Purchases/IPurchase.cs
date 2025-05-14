@@ -4,8 +4,12 @@ namespace DevNote
 {
     public interface IPurchase : IInitializable, ISelectableService
     {
-        public string GetPriceString(ProductKey productKey);
-        public void Purchase(ProductKey productKey, Action onSuccess = null, Action onError = null);
+        public delegate void OnPurchaseHandled(bool success);
+        public event OnPurchaseHandled onPurchaseHandled;
+
+
+        public string GetPriceString(ProductType productType);
+        public void Purchase(ProductType productType, Action onSuccess = null, Action onError = null);
     }
 
 }

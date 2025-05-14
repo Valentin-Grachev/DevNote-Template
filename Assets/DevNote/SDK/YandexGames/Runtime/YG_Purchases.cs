@@ -111,14 +111,23 @@ namespace DevNote.YandexGamesSDK
 
 
 
-#endregion
+        #endregion
+
+
+        public static void InitializePayments()
+        {
+#if UNITY_WEBGL
+            _InitializePayments();
+#endif
+        }
+
 
 
 #if UNITY_WEBGL
         [DllImport("__Internal")] private static extern void CheckPaymentsAvailable();
         [DllImport("__Internal")] private static extern void RequestPurchasing(string productId);
         [DllImport("__Internal")] private static extern void RequestPurchaseConsuming(string productId);
-        [DllImport("__Internal")] public static extern void InitializePayments();
+        [DllImport("__Internal")] private static extern void _InitializePayments();
         [DllImport("__Internal")] private static extern void RequestPurchasesIds();
         [DllImport("__Internal")] private static extern void GetCatalogPrices();
 

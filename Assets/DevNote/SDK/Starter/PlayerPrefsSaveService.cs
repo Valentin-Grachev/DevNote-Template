@@ -7,10 +7,13 @@ namespace DevNote.Services.Starter
 {
     public class PlayerPrefsSaveService : MonoBehaviour, ISave
     {
+        public event Action onSavesDeleted;
+
         private bool _initialized = false;
 
         private const string DATA_KEY = "data";
 
+        
 
         bool ISelectableService.Available => true;
 
@@ -29,7 +32,9 @@ namespace DevNote.Services.Starter
         {
             PlayerPrefs.SetString(DATA_KEY, string.Empty);
             PlayerPrefs.Save();
+
             onSuccess?.Invoke();
+            onSavesDeleted?.Invoke();
         }
 
         void ISave.SaveCloud(Action onSuccess, Action onError) => Save(onSuccess);

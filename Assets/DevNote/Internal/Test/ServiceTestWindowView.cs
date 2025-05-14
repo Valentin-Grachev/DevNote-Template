@@ -30,7 +30,7 @@ namespace DevNote
         [SerializeField] private Button _savesSaveCloudButton;
 
         [Header("Purchases:")]
-        [SerializeField] private ProductKey _testProductKey;
+        [SerializeField] private ProductType _testProductKey;
         [SerializeField] private TextMeshProUGUI _purchasesSelectedServiceText;
         [SerializeField] private TextMeshProUGUI _purchasesProductKeyText;
         [SerializeField] private TextMeshProUGUI _purchasesProductPriceText;
@@ -85,7 +85,7 @@ namespace DevNote
             _analyticsSelectedServiceText.text = analytics.GetType().Name.Replace("AnalyticsService", string.Empty);
             _reviewSelectedServiceText.text = review.GetType().Name.Replace("ReviewService", string.Empty);
 
-            string testValue = IEnvironment.IsTest ? "активен" : "отключен";
+            string testValue = IEnvironment.IsTest ? "???????" : "????????";
             _environmentTestEnabledText.text = _environmentTestEnabledText.text.Replace("<test>", testValue);
 
             string environmentTypeValue = IEnvironment.EnvironmentType.ToString();

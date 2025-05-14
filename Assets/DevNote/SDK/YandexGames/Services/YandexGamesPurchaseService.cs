@@ -1,99 +1,90 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using DevNote.YandexGamesSDK;
 using UnityEngine;
-
+using Zenject;
 
 namespace DevNote.Services.YandexGames
 {
     public class YandexGamesPurchaseService : MonoBehaviour, IPurchase
     {
+        public event IPurchase.OnPurchaseHandled onPurchaseHandled;
 
+        [SerializeField] private ProductIdConvertor _productConvertor;
 
+        private bool _initialized = false;
         private List<string> _purchasedProductIds;
         private Dictionary<string, string> _productPrices;
 
+        [Inject] private readonly ISave save;
 
         bool ISelectableService.Available => YG_Sdk.ServicesIsSupported;
-        bool IInitializable.Initialized => throw new NotImplementedException();
+        bool IInitializable.Initialized => _initialized;
 
-        void IInitializable.Initialize()
+        async void IInitializable.Initialize()
         {
-            throw new NotImplementedException();
-        }
+            save.onSavesDeleted += OnSavesDeleted;
 
+            await UniTask.WaitUntil(() => YG_Purchases.available && save.Initialized);
 
-        string IPurchase.GetPriceString(ProductKey productKey)
-        {
-            if (!_productPrices.ContainsKey(productKey.ToString()))
-                return string.Empty;
-
-            return _productPrices[productKey.ToString()];
-        }
-
-        void IPurchase.Purchase(ProductKey productKey, Action onSuccess, Action onError)
-        {
-            onSuccess += (success) =>
-            {
-                if (success) YG_Purchases.Consume(productKey);
-            };
-            YG_Purchases.Purchase(productKey, onSuccess);
-        }
-
-        
-
-
-
-        public override string GetPriceString(string productKey)
-        {
-            
-        }
-
-
-
-
-        public override void Initialize()
-        {
-            Saves.onDeleted += OnSavesDeleted;
-            StartCoroutine(PurchasesInitializing());
-        }
-
-        
-
-        private IEnumerator PurchasesInitializing()
-        {
-            yield return new WaitUntil(() => YG_Purchases.available);
-
-#if UNITY_WEBGL
-                YG_Purchases.InitializePayments();
-#endif
+            YG_Purchases.InitializePayments();
 
             YG_Purchases.GetPurchasedProducts((purchasedProductIds) =>
             {
                 _purchasedProductIds = purchasedProductIds;
-                foreach (var purchasedProductKey in _purchasedProductIds)
+                foreach (var purchasedProductId in _purchasedProductIds)
                 {
-                    if (purchasedProductKey == string.Empty) continue;
+                    if (purchasedProductId == string.Empty)
+                        continue;
 
-                    var productType = Products.GetProductTypeByKey(purchasedProductKey);
+                    var productType = _productConvertor.GetProductType(purchasedProductId);
+                    PurchaseHandler.HandlePurchase(productType);
 
-                    PurchasesHandler.HandlePurchase(productType);
-                    if (Products.Infos[productType].isConsumable)
-                        YG_Purchases.Consume(purchasedProductKey);
+                    if (ProductCatalog.IsConsumable(productType))
+                        YG_Purchases.Consume(purchasedProductId);
                 }
             });
 
             YG_Purchases.GetPrices((productPrices) => _productPrices = productPrices);
 
-            yield return new WaitUntil(
-                () => _purchasedProductIds != null && _productPrices != null);
-
-            InitCompleted();
+            await UniTask.WaitUntil(() => _purchasedProductIds != null && _productPrices != null);
+            _initialized = true;
         }
 
-        public override void Purchase(string productKey, Action<bool> onSuccess)
+
+        string IPurchase.GetPriceString(ProductType productType)
         {
+            string productId = _productConvertor.GetProductId(productType);
+
+            if (!_productPrices.ContainsKey(productId))
+                return string.Empty;
+
+            return _productPrices[productId];
+        }
+
+        void IPurchase.Purchase(ProductType productType, Action onSuccess, Action onError)
+        {
+            string productId = _productConvertor.GetProductId(productType);
+
+            YG_Purchases.Purchase(productId, onPurchasedSuccess: (success) =>
+            {
+                if (success)
+                {
+                    PurchaseHandler.HandlePurchase(productType);
+
+                    if (ProductCatalog.IsConsumable(productType))
+                        YG_Purchases.Consume(productId);
+
+                    onSuccess?.Invoke();
+                    onPurchaseHandled?.Invoke(success: true);
+                }
+                else
+                {
+                    onError?.Invoke();
+                    onPurchaseHandled?.Invoke(success: false);
+                }
+            });
             
         }
 
