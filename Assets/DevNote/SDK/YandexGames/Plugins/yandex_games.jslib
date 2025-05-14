@@ -245,7 +245,7 @@ mergeInto(LibraryManager.library, {
   },
 
 
-  ShowBanner: function () {
+  _ShowBanner: function () {
 
     ysdk.adv.getBannerAdvStatus().then(({ stickyAdvIsShowing , reason }) => {
       if (stickyAdvIsShowing) {
@@ -268,7 +268,7 @@ mergeInto(LibraryManager.library, {
 
   },
 
-  HideBanner: function () {
+  _HideBanner: function () {
 
     ysdk.adv.getBannerAdvStatus().then(({ stickyAdvIsShowing , reason }) => {
       if (stickyAdvIsShowing) {

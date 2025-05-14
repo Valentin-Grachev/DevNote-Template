@@ -65,11 +65,25 @@ namespace DevNote.YandexGamesSDK
 
         #endregion
 
+        public static void ShowBanner()
+        {
+#if UNITY_WEBGL
+            _ShowBanner();
+#endif
+        }
+
+        public static void HideBanner()
+        {
+#if UNITY_WEBGL
+            _HideBanner();
+#endif
+        }
+
 
 #if UNITY_WEBGL
 
-        [DllImport("__Internal")] public static extern void ShowBanner();
-        [DllImport("__Internal")] public static extern void HideBanner();
+        [DllImport("__Internal")] public static extern void _ShowBanner();
+        [DllImport("__Internal")] public static extern void _HideBanner();
         [DllImport("__Internal")] private static extern void ShowRewarded();
         [DllImport("__Internal")] private static extern void ShowInterstitial();
 
