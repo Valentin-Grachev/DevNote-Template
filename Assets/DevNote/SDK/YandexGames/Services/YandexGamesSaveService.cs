@@ -26,9 +26,7 @@ namespace DevNote.Services.YandexGames
 
             YG_Saves.RequestSaves((savedData) =>
             {
-                var dataDictionary = GameStateEncoder.Decode(savedData);
-                GameStateParcer.Parse(dataDictionary);
-
+                GameState.RestoreFromEncodedData(savedData);
                 _initialized = true;
             });
 
@@ -37,19 +35,15 @@ namespace DevNote.Services.YandexGames
 
         void ISave.SaveLocal(Action onSuccess, Action onError)
         {
-            var gameStateData = GameStateParcer.ToDataString();
-            var encodedData = GameStateEncoder.Encode(gameStateData);
-            PlayerPrefs.SetString(LOCAL_DATA_KEY, encodedData);
+            PlayerPrefs.SetString(LOCAL_DATA_KEY, GameState.GetEncodedData());
             PlayerPrefs.Save();
+
             onSuccess?.Invoke();
         }
 
         void ISave.SaveCloud(Action onSuccess, Action onError)
         {
-            var gameStateData = GameStateParcer.ToDataString();
-            var encodedData = GameStateEncoder.Encode(gameStateData);
-
-            YG_Saves.SendSaves(encodedData, onSavesSent: (success) =>
+            YG_Saves.SendSaves(GameState.GetEncodedData(), onSavesSent: (success) =>
             {
                 if (success) onSuccess?.Invoke();
                 else onError?.Invoke();

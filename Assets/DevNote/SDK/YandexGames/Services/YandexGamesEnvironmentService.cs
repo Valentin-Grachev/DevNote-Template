@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using DevNote.YandexGamesSDK;
 using UnityEngine;
@@ -36,6 +37,8 @@ namespace DevNote.Services.YandexGames
         Language IEnvironment.CurrentLanguage => _definedLanguage;
 
         ControlType IEnvironment.ControlType => YG_Sdk.GetDeviceType();
+
+        DateTime IEnvironment.ServerTime => DateTime.Now;
 
         void IEnvironment.GameReady() => YG_GameReady.GameReady();
 

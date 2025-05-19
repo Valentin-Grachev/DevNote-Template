@@ -5,6 +5,7 @@ namespace DevNote
     {
         None = 0,
         YandexGames = 1,
+        GamePush = 2,
     }
 }
 

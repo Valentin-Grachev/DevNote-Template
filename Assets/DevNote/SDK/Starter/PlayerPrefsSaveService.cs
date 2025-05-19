@@ -21,8 +21,8 @@ namespace DevNote.Services.Starter
 
         void IInitializable.Initialize()
         {
-            var dataDictionary = GameStateEncoder.Decode(PlayerPrefs.GetString(DATA_KEY, string.Empty));
-            GameStateParcer.Parse(dataDictionary);
+            var encodedData = PlayerPrefs.GetString(DATA_KEY, string.Empty);
+            GameState.RestoreFromEncodedData(encodedData);
 
             _initialized = true;
         }
@@ -43,10 +43,9 @@ namespace DevNote.Services.Starter
 
         private void Save(Action onSuccess)
         {
-            var gameStateData = GameStateParcer.ToDataString();
-            var encodedData = GameStateEncoder.Encode(gameStateData);
-            PlayerPrefs.SetString(DATA_KEY, encodedData);
+            PlayerPrefs.SetString(DATA_KEY, GameState.GetEncodedData());
             PlayerPrefs.Save();
+
             onSuccess?.Invoke();
         }
 

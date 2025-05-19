@@ -10,8 +10,8 @@ namespace DevNote
 {
     public static class GameStateEncoder
     {
-        public const char cellSeparator = '|';
-        public const char keyValuePairSeparator = ';';
+        private const char CELL_SEPARATOR = '|';
+        private const char KEY_VALUE_PAIR_SEPARATOR = ';';
 
 
         public static Dictionary<string, string> Decode(string compressedData, bool showLogs = false)
@@ -41,11 +41,11 @@ namespace DevNote
         private static Dictionary<string, string> ToDataDictionary(string data)
         {
             var result = new Dictionary<string, string>();
-            var splitByCellData = data.Split(cellSeparator);
+            var splitByCellData = data.Split(CELL_SEPARATOR);
 
             for (int i = 0; i < splitByCellData.Length; i++)
             {
-                var splitCell = splitByCellData[i].Split(keyValuePairSeparator);
+                var splitCell = splitByCellData[i].Split(KEY_VALUE_PAIR_SEPARATOR);
                 result.Add(splitCell[0], splitCell[1]);
             }
 
@@ -59,8 +59,8 @@ namespace DevNote
             int i = 0;
             foreach (var keyValue in dataDictionary)
             {
-                result += $"{keyValue.Key}{keyValuePairSeparator}{keyValue.Value}";
-                if (i != dataDictionary.Count - 1) result += cellSeparator;
+                result += $"{keyValue.Key}{KEY_VALUE_PAIR_SEPARATOR}{keyValue.Value}";
+                if (i != dataDictionary.Count - 1) result += CELL_SEPARATOR;
                 i++;
             }
 

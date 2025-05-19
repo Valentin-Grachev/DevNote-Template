@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 
@@ -19,7 +20,7 @@ namespace DevNote.Services.Starter
 
         ControlType IEnvironment.ControlType => _controlType;
 
-        
+        DateTime IEnvironment.ServerTime => DateTime.Now;
 
         void IEnvironment.GameReady() => Debug.Log($"{Const.LOG_PREFIX} Game ready");
 

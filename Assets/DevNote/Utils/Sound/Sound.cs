@@ -10,7 +10,7 @@ namespace DevNote
     {
         public enum Channel { Music, SFX }
 
-        private bool _initialized = false;
+        private bool _initialized = false; public static bool Initialized => _instance._initialized;
 
         private static bool UseWebAudio => IEnvironment.PlatformType == PlatformType.WebGL;
 

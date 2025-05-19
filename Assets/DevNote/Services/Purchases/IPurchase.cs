@@ -4,7 +4,7 @@ namespace DevNote
 {
     public interface IPurchase : IInitializable, ISelectableService
     {
-        public delegate void OnPurchaseHandled(bool success);
+        public delegate void OnPurchaseHandled(ProductType productType, bool success);
         public event OnPurchaseHandled onPurchaseHandled;
 
 

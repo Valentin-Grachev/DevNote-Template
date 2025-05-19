@@ -21,7 +21,7 @@ namespace DevNote.Services.Starter
         void IPurchase.Purchase(ProductType productType, Action onSuccess, Action onError)
         {
             PurchaseHandler.HandlePurchase(productType);
-            onPurchaseHandled?.Invoke(true);
+            onPurchaseHandled?.Invoke(productType, true);
             onSuccess?.Invoke();
         }
     }

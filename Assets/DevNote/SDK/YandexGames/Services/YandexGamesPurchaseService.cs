@@ -77,12 +77,12 @@ namespace DevNote.Services.YandexGames
                         YG_Purchases.Consume(productId);
 
                     onSuccess?.Invoke();
-                    onPurchaseHandled?.Invoke(success: true);
+                    onPurchaseHandled?.Invoke(productType, success: true);
                 }
                 else
                 {
                     onError?.Invoke();
-                    onPurchaseHandled?.Invoke(success: false);
+                    onPurchaseHandled?.Invoke(productType, success: false);
                 }
             });
             

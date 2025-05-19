@@ -23,7 +23,10 @@ namespace DevNote
         private bool _initialized = false;
 
 
-        public bool Initialized => _initialized;
+        public static bool Initialized => _instance._initialized;
+
+        bool IInitializable.Initialized => _initialized;
+
         async void IInitializable.Initialize()
         {
             _instance = this;

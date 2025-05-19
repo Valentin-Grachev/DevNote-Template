@@ -715,7 +715,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8133262648657359149, guid: 3c91a1ffcbfb63f4eb01d1314e4f83d3, type: 3}
       propertyPath: m_Name
-      value: ServiceTestWindow
+      value: ServiceTest
       objectReference: {fileID: 0}
     - target: {fileID: 8321958163248156516, guid: 3c91a1ffcbfb63f4eb01d1314e4f83d3, type: 3}
       propertyPath: m_AnchorMax.y
