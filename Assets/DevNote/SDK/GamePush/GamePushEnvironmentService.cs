@@ -24,7 +24,7 @@ namespace DevNote.Services.GamePush
             _ => Language.EN,
         };
 
-        ControlType IEnvironment.ControlType => GP_Device.IsMobile() ? ControlType.Mobile : ControlType.Desktop;
+        DeviceType IEnvironment.DeviceType => GP_Device.IsMobile() ? DeviceType.Mobile : DeviceType.Desktop;
 
 
         bool IInitializable.Initialized => GP_Init.isReady;

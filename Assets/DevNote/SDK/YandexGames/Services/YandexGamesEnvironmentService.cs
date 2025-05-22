@@ -36,7 +36,7 @@ namespace DevNote.Services.YandexGames
 
         Language IEnvironment.CurrentLanguage => _definedLanguage;
 
-        ControlType IEnvironment.ControlType => YG_Sdk.GetDeviceType();
+        DeviceType IEnvironment.DeviceType => YG_Sdk.GetDeviceType();
 
         DateTime IEnvironment.ServerTime => DateTime.Now;
 

@@ -7,7 +7,7 @@ namespace DevNote.Services.Starter
     public class ManualEnvironmentService : MonoBehaviour, IEnvironment
     {
         [SerializeField] private Language _currentLanguage = Language.EN;
-        [SerializeField] private ControlType _controlType = ControlType.Desktop;
+        [SerializeField] private DeviceType _deviceType = DeviceType.Desktop;
 
 
         bool IInitializable.Initialized => true;
@@ -18,7 +18,7 @@ namespace DevNote.Services.Starter
 
         Language IEnvironment.CurrentLanguage => _currentLanguage;
 
-        ControlType IEnvironment.ControlType => _controlType;
+        DeviceType IEnvironment.DeviceType => _deviceType;
 
         DateTime IEnvironment.ServerTime => DateTime.Now;
 

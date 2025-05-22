@@ -47,7 +47,7 @@ namespace DevNote
 
         public DateTime ServerTime { get; }
         public Language CurrentLanguage { get; }
-        public ControlType ControlType { get; }
+        public DeviceType DeviceType { get; }
         public void GameReady();
 
     }

@@ -478,6 +478,7 @@ MonoBehaviour:
   - {fileID: 3077939149344613598}
   - {fileID: 347275801762883020}
   _analyticsServices:
+  - {fileID: 3117871511257792817}
   - {fileID: 4946907644923584467}
   _reviewServices:
   - {fileID: 1734846008855763987}
@@ -1043,6 +1044,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8785028290862818029}
   - component: {fileID: 4946907644923584467}
+  - component: {fileID: 3117871511257792817}
   m_Layer: 0
   m_Name: Analytics
   m_TagString: Untagged
@@ -1077,6 +1079,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b030d2a55e032df41a7a0694632cfbec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3117871511257792817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8950268423520486393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d90ccfbb62c6e7439cc6430c85b136a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _config: {fileID: 11400000, guid: 7d3664e7a6a1cf04d87669816ddccaa6, type: 2}
 --- !u!1 &8992132696936692313
 GameObject:
   m_ObjectHideFlags: 0

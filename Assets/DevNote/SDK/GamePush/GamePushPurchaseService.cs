@@ -18,7 +18,7 @@ namespace DevNote.Services.GamePush
         private bool _initialized = false;
         private Dictionary<ProductType, string> _productPrices = new();
 
-        bool ISelectableService.Available => GamePushEnvironmentService.ServicesIsAvailable;
+        bool ISelectableService.Available => GamePushEnvironmentService.ServicesIsAvailable && !IEnvironment.IsEditor;
 
 
         bool IInitializable.Initialized => _initialized;
