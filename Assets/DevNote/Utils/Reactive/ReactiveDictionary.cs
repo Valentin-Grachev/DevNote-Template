@@ -6,7 +6,7 @@ namespace DevNote
 {
     public class ReactiveDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
     {
-        public event Action onChanged;
+        public event Action OnChanged;
 
 
         private Dictionary<TKey, TValue> _dictionary;
@@ -24,7 +24,7 @@ namespace DevNote
         public void Add(TKey key, TValue value)
         {
             _dictionary.Add(key, value);
-            onChanged?.Invoke();
+            OnChanged?.Invoke();
         }
 
         public void Remove(TKey key)
@@ -32,7 +32,7 @@ namespace DevNote
             if (!_dictionary.ContainsKey(key)) return;
 
             _dictionary.Remove(key);
-            onChanged?.Invoke();
+            OnChanged?.Invoke();
         }
 
         public TValue Get(TKey key) => _dictionary[key];
@@ -42,13 +42,13 @@ namespace DevNote
         public void Set(TKey key, TValue value)
         {
             _dictionary[key] = value;
-            onChanged?.Invoke();
+            OnChanged?.Invoke();
         }
 
         public void Clear()
         {
             _dictionary.Clear();
-            onChanged?.Invoke();
+            OnChanged?.Invoke();
         }
 
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() 
