@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using System.Globalization;
-using System.Runtime.InteropServices;
 using NaughtyAttributes;
 using UnityEngine;
 
+#if UNITY_WEBGL
+using System.Runtime.InteropServices;
+#endif
 
 namespace DevNote.Services.YandexMetrica
 {
@@ -31,13 +33,13 @@ namespace DevNote.Services.YandexMetrica
             if (parameters != null && parameters.Count > 0)
                 jsonParameters = ToJson(convertedParameters);
 
+#if UNITY_WEBGL
             _SendEvent(_config.YandexMetricaCounterId, eventName, jsonParameters);
+#endif
         }
 
 #if UNITY_WEBGL
-
         [DllImport("__Internal")] private static extern void _SendEvent(int counterId, string eventName, string eventData);
-
 #endif
 
 

@@ -4,13 +4,13 @@ namespace DevNote
 {
     public static class GameStateParcer
     {
-        private const string adsEnabledKey = "adsEnabled";
+        private const string ADS_ENABLED_KEY = "adsEnabled";
 
 
         public static void Parse(Dictionary<string, string> data)
         {
-            GameState.adsEnabled = new ReactiveValue<bool>
-                (data.ContainsKey(adsEnabledKey) ? bool.Parse(data[adsEnabledKey]) : true);
+            GameState.AdsEnabled = new ReactiveValue<bool>
+                (data.ContainsKey(ADS_ENABLED_KEY) ? bool.Parse(data[ADS_ENABLED_KEY]) : true);
 
         }
 
@@ -19,7 +19,7 @@ namespace DevNote
         {
             var data = new Dictionary<string, string>();
 
-            data.Add(adsEnabledKey, GameState.adsEnabled.Value.ToString());
+            data.Add(ADS_ENABLED_KEY, GameState.AdsEnabled.Value.ToString());
 
             return data;
         }

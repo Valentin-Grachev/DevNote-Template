@@ -13,12 +13,12 @@ namespace DevNote
 
         protected override void Subscribe()
         {
-            Localization.onLanguageChanged += Display;
+            Localization.OnLanguageChanged += Display;
         }
 
         protected override void Dispose()
         {
-            Localization.onLanguageChanged -= Display;
+            Localization.OnLanguageChanged -= Display;
         }
 
         protected override void Display()

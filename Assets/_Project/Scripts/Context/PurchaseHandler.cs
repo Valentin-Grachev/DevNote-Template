@@ -10,7 +10,7 @@ namespace DevNote
             switch (productType)
             {
                 case ProductType.NoAds:
-                    GameState.adsEnabled.Value = false;
+                    GameState.AdsEnabled.Value = false;
                     break;
 
                 default: 

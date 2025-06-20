@@ -12,6 +12,8 @@ namespace DevNote
 {
     public class GoogleTables : MonoBehaviour, IInitializable
     {
+        public static bool Initialized => _instance._initialized;
+
         private enum RequestDataMode { None, Editor, EditorAndBuild }
 
         private static GoogleTables _instance;
@@ -28,7 +30,7 @@ namespace DevNote
         private bool _initialized = false;
 
 
-        public static bool Initialized => _instance._initialized;
+        
 
         bool IInitializable.Initialized => _initialized;
         async void IInitializable.Initialize()

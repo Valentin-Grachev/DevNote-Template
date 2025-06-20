@@ -4,7 +4,7 @@ namespace DevNote
 {
     public class ReactiveValue<T>
     {
-        public event Action onChanged;
+        public event Action OnChanged;
 
         private T _value;
 
@@ -14,7 +14,7 @@ namespace DevNote
             set
             {
                 _value = value;
-                onChanged?.Invoke();
+                OnChanged?.Invoke();
             }
         }
 
@@ -22,6 +22,8 @@ namespace DevNote
         {
             _value = value;
         }
+
+        public override string ToString() => _value.ToString();
 
     }
 }

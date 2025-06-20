@@ -9,10 +9,12 @@ namespace DevNote
 
     public class Localization : MonoBehaviour, IInitializable
     {
-        public static event Action onLanguageChanged;
+        public static event Action OnLanguageChanged;
         public static Language CurrentLanguage { get; private set; }
+        public static bool Initialized => _instance._initialized;
 
         private static Localization _instance;
+
 
 
         [SerializeField] private GoogleTables _googleTables;
@@ -22,8 +24,7 @@ namespace DevNote
 
         private bool _initialized = false;
 
-
-        public static bool Initialized => _instance._initialized;
+        
 
         bool IInitializable.Initialized => _initialized;
 
@@ -46,7 +47,7 @@ namespace DevNote
             CurrentLanguage = _instance._config.AvailableLanguages.Contains(language) ?
                 language : _instance._config.DefaultLanguage;
 
-            onLanguageChanged?.Invoke();
+            OnLanguageChanged?.Invoke();
         }
 
         public static string GetLocalizedText(string key)
