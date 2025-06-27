@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using DevNote.YandexGamesSDK;
 using UnityEngine;
@@ -13,8 +14,8 @@ namespace DevNote.Services.YandexGames
 
         bool ISelectableService.Available => YG_Sdk.ServicesIsSupported;
 
-        bool IInitializable.Initialized => _initialized;
-        async void IInitializable.Initialize()
+        bool IProjectInitializable.Initialized => _initialized;
+        async void IProjectInitializable.Initialize()
         {
             var sdkObject = Instantiate(_yandexGamesSdkPrefab, parent: null);
             sdkObject.name = sdkObject.name.Replace("(Clone)", string.Empty);
@@ -35,7 +36,9 @@ namespace DevNote.Services.YandexGames
 
         Language IEnvironment.CurrentLanguage => _definedLanguage;
 
-        ControlType IEnvironment.ControlType => YG_Sdk.GetDeviceType();
+        DeviceType IEnvironment.DeviceType => YG_Sdk.GetDeviceType();
+
+        DateTime IEnvironment.ServerTime => DateTime.Now;
 
         void IEnvironment.GameReady() => YG_GameReady.GameReady();
 

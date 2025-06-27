@@ -94,7 +94,7 @@ namespace DevNote
             string languageValue = environment.CurrentLanguage.ToString();
             _environmentLanguageText.text = _environmentLanguageText.text.Replace("<language>", languageValue);
 
-            string controlValue = environment.ControlType.ToString();
+            string controlValue = environment.DeviceType.ToString();
             _environmentDeviceTypeText.text = _environmentDeviceTypeText.text.Replace("<device>", controlValue);
 
             string priceValue = purchase.GetPriceString(_testProductKey);
@@ -109,10 +109,10 @@ namespace DevNote
 
         private void OnReviewButtonClick() => review.Request();
 
-        private void OnSendTestEventButtonClick() => analytics.SendEvent("test", new Dictionary<string, object>()
+        private void OnSendTestEventButtonClick() => analytics.SendEvent("test_event", new Dictionary<string, object>()
         {
-            { "test_version" , IEnvironment.IsTest },
-            { "platform" , IEnvironment.PlatformType.ToString() }
+            { "random_int" , Random.Range(0, 3) },
+            { "device_type" , environment.DeviceType.ToString() },
         });
 
         private void OnPurchaseButtonClick()

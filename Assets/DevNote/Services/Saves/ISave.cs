@@ -2,7 +2,7 @@ using System;
 
 namespace DevNote
 {
-    public interface ISave : IInitializable, ISelectableService
+    public interface ISave : IProjectInitializable, ISelectableService
     {
         public event Action onSavesDeleted;
 

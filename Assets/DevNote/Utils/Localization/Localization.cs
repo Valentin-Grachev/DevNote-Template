@@ -7,12 +7,14 @@ using UnityEngine;
 namespace DevNote
 {
 
-    public class Localization : MonoBehaviour, IInitializable
+    public class Localization : MonoBehaviour, IProjectInitializable
     {
-        public static event Action onLanguageChanged;
+        public static event Action OnLanguageChanged;
         public static Language CurrentLanguage { get; private set; }
+        public static bool Initialized => _instance._initialized;
 
         private static Localization _instance;
+
 
 
         [SerializeField] private GoogleTables _googleTables;
@@ -22,14 +24,16 @@ namespace DevNote
 
         private bool _initialized = false;
 
+        
 
-        public bool Initialized => _initialized;
-        async void IInitializable.Initialize()
+        bool IProjectInitializable.Initialized => _initialized;
+
+        async void IProjectInitializable.Initialize()
         {
             _instance = this;
             _config = Resources.Load<LocalizationConfig>("Localization");
 
-            await UniTask.WaitUntil(() => (_googleTables as IInitializable).Initialized);
+            await UniTask.WaitUntil(() => (_googleTables as IProjectInitializable).Initialized);
 
             foreach (var translation in _config.Translations)
                 _tranlationDictionary.Add(translation.key, translation);
@@ -43,7 +47,7 @@ namespace DevNote
             CurrentLanguage = _instance._config.AvailableLanguages.Contains(language) ?
                 language : _instance._config.DefaultLanguage;
 
-            onLanguageChanged?.Invoke();
+            OnLanguageChanged?.Invoke();
         }
 
         public static string GetLocalizedText(string key)

@@ -6,7 +6,7 @@ namespace DevNote
 {
     public class ReactiveList<T> : IEnumerable<T>
     {
-        public event Action onChanged;
+        public event Action OnChanged;
         private List<T> _list;
 
 
@@ -28,7 +28,7 @@ namespace DevNote
         public void Add(T item)
         {
             _list.Add(item);
-            onChanged?.Invoke();
+            OnChanged?.Invoke();
         }
 
         public void Remove(T item)
@@ -36,7 +36,7 @@ namespace DevNote
             if (!_list.Contains(item)) return;
 
             _list.Remove(item);
-            onChanged?.Invoke();
+            OnChanged?.Invoke();
         }
 
         public T Get(int index) => _list[index];
@@ -44,13 +44,13 @@ namespace DevNote
         public void Set(int index, T value)
         {
             _list[index] = value;
-            onChanged?.Invoke();
+            OnChanged?.Invoke();
         }
 
         public void Clear()
         {
             _list.Clear();
-            onChanged?.Invoke();
+            OnChanged?.Invoke();
         }
 
         public IEnumerator<T> GetEnumerator() => ((IEnumerable<T>)_list).GetEnumerator();
@@ -61,7 +61,7 @@ namespace DevNote
         public void ReplaceList(List<T> list)
         {
             _list = list;
-            onChanged?.Invoke();
+            OnChanged?.Invoke();
         }
 
     }

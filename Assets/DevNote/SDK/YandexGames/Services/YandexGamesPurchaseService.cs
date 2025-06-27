@@ -20,9 +20,9 @@ namespace DevNote.Services.YandexGames
         [Inject] private readonly ISave save;
 
         bool ISelectableService.Available => YG_Sdk.ServicesIsSupported;
-        bool IInitializable.Initialized => _initialized;
+        bool IProjectInitializable.Initialized => _initialized;
 
-        async void IInitializable.Initialize()
+        async void IProjectInitializable.Initialize()
         {
             await UniTask.WaitUntil(() => YG_Purchases.available && save.Initialized);
 
@@ -77,12 +77,12 @@ namespace DevNote.Services.YandexGames
                         YG_Purchases.Consume(productId);
 
                     onSuccess?.Invoke();
-                    onPurchaseHandled?.Invoke(success: true);
+                    onPurchaseHandled?.Invoke(productType, success: true);
                 }
                 else
                 {
                     onError?.Invoke();
-                    onPurchaseHandled?.Invoke(success: false);
+                    onPurchaseHandled?.Invoke(productType, success: false);
                 }
             });
             

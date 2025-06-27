@@ -1,14 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Cysharp.Threading.Tasks;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Networking;
-using NaughtyAttributes;
 
 
 namespace DevNote
 {
-    public class AudioWebCash : MonoBehaviour, IInitializable
+    public class AudioWebCash : MonoBehaviour, IProjectInitializable
     {
         private static Dictionary<string, AudioClip> cashedClips = new Dictionary<string, AudioClip>();
 
@@ -18,10 +18,10 @@ namespace DevNote
         private bool _initialized = false;
 
 
-        bool IInitializable.Initialized => _initialized;
+        bool IProjectInitializable.Initialized => _initialized;
 
 
-        void IInitializable.Initialize()
+        void IProjectInitializable.Initialize()
         {
             LoadAllClips();
         }
@@ -40,18 +40,17 @@ namespace DevNote
                 _loadedClips = 0;
 
                 foreach (var clipName in _cashedClipNames)
-                    StartCoroutine(LoadClip(clipName));
+                    LoadClip(clipName).Forget();
             }
             
         }
 
-        private IEnumerator LoadClip(string name)
+        private async UniTask LoadClip(string name)
         {
             string url = Application.streamingAssetsPath + "/" + name;
 
             UnityWebRequest request = UnityWebRequestMultimedia.GetAudioClip(url, AudioType.MPEG);
-            request.SendWebRequest();
-            yield return new WaitUntil(() => request.isDone);
+            await request.SendWebRequest();
 
             AudioClip audioClip = DownloadHandlerAudioClip.GetContent(request);
             

@@ -1,10 +1,15 @@
+using System;
+
 namespace DevNote
 {
-    public interface IEnvironment : IInitializable, ISelectableService
+    public interface IEnvironment : IProjectInitializable, ISelectableService
     {
         public static bool IsTest { get; set; }
         public static EnvironmentType EnvironmentType { get; set; }
         public static bool ShowAds { get; set; } = true;
+
+        
+
 
         public static PlatformType PlatformType
         {
@@ -40,9 +45,9 @@ namespace DevNote
             }
         }
 
-        
+        public DateTime ServerTime { get; }
         public Language CurrentLanguage { get; }
-        public ControlType ControlType { get; }
+        public DeviceType DeviceType { get; }
         public void GameReady();
 
     }

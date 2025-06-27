@@ -10,10 +10,13 @@ using UnityEngine;
 
 namespace DevNote
 {
-    public class GoogleTables : MonoBehaviour, IInitializable
+    public class GoogleTables : MonoBehaviour, IProjectInitializable
     {
+        public static bool Initialized => _instance._initialized;
+
         private enum RequestDataMode { None, Editor, EditorAndBuild }
 
+        private static GoogleTables _instance;
 
 
         [SerializeField] private RequestDataMode _startGameRequestMode; 
@@ -27,10 +30,13 @@ namespace DevNote
         private bool _initialized = false;
 
 
+        
 
-        bool IInitializable.Initialized => _initialized;
-        async void IInitializable.Initialize()
+        bool IProjectInitializable.Initialized => _initialized;
+        async void IProjectInitializable.Initialize()
         {
+            _instance = this;
+
             switch (_startGameRequestMode)
             {
                 case RequestDataMode.None:

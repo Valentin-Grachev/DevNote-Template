@@ -15,9 +15,9 @@ namespace DevNote.Services.YandexGames
 
         bool ISelectableService.Available => YG_Sdk.ServicesIsSupported;
 
-        bool IInitializable.Initialized => _initialized;
+        bool IProjectInitializable.Initialized => _initialized;
 
-        async void IInitializable.Initialize()
+        async void IProjectInitializable.Initialize()
         {
             await UniTask.WaitUntil(() => YG_Sdk.available);
             _initialized = true;
@@ -51,12 +51,12 @@ namespace DevNote.Services.YandexGames
                         if (!error && rewarded)
                         {
                             onRewarded?.Invoke();
-                            onRewardedShown?.Invoke(success: true);
+                            onRewardedShown?.Invoke(adKey, true);
                         }
                         else
                         {
                             onError?.Invoke();
-                            onRewardedShown?.Invoke(false);
+                            onRewardedShown?.Invoke(adKey, false);
                         }
 
                         break;
@@ -80,10 +80,11 @@ namespace DevNote.Services.YandexGames
 
                     case YG_Ads.InterstitialAction.Closed:
                         TimeMode.SetActive(TimeMode.Mode.Stop, false);
-                        onInterstitialShown?.Invoke(success: interstitialWasShown);
 
                         if (interstitialWasShown) onShown?.Invoke();
                         else onError?.Invoke();
+
+                        onInterstitialShown?.Invoke(adKey, interstitialWasShown);
                         break;
                 }
 

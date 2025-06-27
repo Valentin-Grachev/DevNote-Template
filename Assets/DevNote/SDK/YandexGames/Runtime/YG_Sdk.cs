@@ -44,13 +44,13 @@ namespace DevNote.YandexGamesSDK
         private void HTML_OnLanguageReceived(string language) => _receivedLanguage = language;
 
 
-        private static ControlType _receivedDeviceType;
+        private static DeviceType _receivedDeviceType;
         private void HTML_OnDeviceTypeReceived(string deviceType)
         {
-            if (deviceType == "desktop") _receivedDeviceType = ControlType.Desktop;
-            else _receivedDeviceType = ControlType.Mobile;
+            if (deviceType == "desktop") _receivedDeviceType = DeviceType.Desktop;
+            else _receivedDeviceType = DeviceType.Mobile;
         }
-        public static ControlType GetDeviceType()
+        public static DeviceType GetDeviceType()
         {
 #if UNITY_WEBGL
             _GetDeviceType();

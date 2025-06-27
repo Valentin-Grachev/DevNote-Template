@@ -2,9 +2,9 @@ using System;
 
 namespace DevNote
 {
-    public interface IAds : IInitializable, ISelectableService
+    public interface IAds : IProjectInitializable, ISelectableService
     {
-        public delegate void AdShownEvent(bool success);
+        public delegate void AdShownEvent(AdKey adKey, bool success);
         public event AdShownEvent onInterstitialShown;
         public event AdShownEvent onRewardedShown;
 

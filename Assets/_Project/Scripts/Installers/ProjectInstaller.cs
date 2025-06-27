@@ -18,7 +18,7 @@ public class ProjectInstaller : MonoInstaller
     [SerializeField] private Localization _localization;
     [SerializeField] private List<GameObject> _onlyBootstrapGameObject;
     
-    private List<DevNote.IInitializable> _initializables = new();
+    private List<DevNote.IProjectInitializable> _initializables = new();
 
 
     public override async void InstallBindings()
@@ -77,13 +77,13 @@ public class ProjectInstaller : MonoInstaller
     private T RunServiceInitialization<T>() where T : class
     {
         var service = _serviceSelector.GetServiceInterface<T>();
-        var initializable = service as DevNote.IInitializable;
+        var initializable = service as DevNote.IProjectInitializable;
         _initializables.Add(initializable);
         initializable.Initialize();
         return service;
     }
 
-    private void RunInitialization(DevNote.IInitializable initializable)
+    private void RunInitialization(DevNote.IProjectInitializable initializable)
     {
         initializable.Initialize();
         _initializables.Add(initializable);

@@ -11,24 +11,24 @@ namespace DevNote.Services.Starter
 
         bool ISelectableService.Available => true;
 
-        bool IInitializable.Initialized => true;
+        bool IProjectInitializable.Initialized => true;
 
         
 
-        void IInitializable.Initialize() { }
+        void IProjectInitializable.Initialize() { }
 
         void IAds.SetBanner(bool active) {}
 
         void IAds.ShowInterstitial(AdKey adKey, Action onShown, Action onError)
         {
             onShown?.Invoke();
-            onInterstitialShown?.Invoke(success: true);
+            onInterstitialShown?.Invoke(adKey, true);
         }
 
         void IAds.ShowRewarded(AdKey adKey, Action onRewarded, Action onError)
         {
             onRewarded?.Invoke();
-            onRewardedShown?.Invoke(success: true);
+            onRewardedShown?.Invoke(adKey, true);
         }
     }
 }
