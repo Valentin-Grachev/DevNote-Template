@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace DevNote.Tutorial.MVP
         [SerializeField] private ScoreProgressWidgetView _scoreProgressWidget;
         [SerializeField] private Button _addButton;
         [SerializeField] private Button _switchAdsButton;
+        [SerializeField] private Button _closeButton;
         [SerializeField] private Image _adsEnabledImage;
         [SerializeField] private Color _adsDisabledColor;
         [SerializeField] private Color _adsEnabledColor;
@@ -20,6 +22,7 @@ namespace DevNote.Tutorial.MVP
         // Сюда прокидываем зависимость от контроллера. Для контроллеров здесь всегда приписывайте постфикс Controller.
         // Используйте только через аттрибут [Inject], не создавайте метод Construct() и не используйте другие способы.
         [Inject] private readonly ScoreController scoreController;
+        [Inject] private readonly MenuController menuController;
 
         // Обратите внимание, что параметры для анимации прописываются константами
         private const float SHOW_ANIMATION_DURATION = 1f;
@@ -45,6 +48,13 @@ namespace DevNote.Tutorial.MVP
             // Отписка от событий нажатия кнопки не требуется.
             _addButton.onClick.AddListener(OnAddButtonClick);
             _switchAdsButton.onClick.AddListener(OnSwitchAdsButtonClick);
+            _closeButton.onClick.AddListener(OnCloseButtonClick);
+        }
+
+        private void OnCloseButtonClick()
+        {
+            scoreController.HideScoreWindow();
+            menuController.ShowMenuButton();
         }
 
 
@@ -69,6 +79,11 @@ namespace DevNote.Tutorial.MVP
             transform.DOScale(1f, SHOW_ANIMATION_DURATION).SetEase(Ease.OutFlash);
         }
 
+        public void DisplayHideAnimation(Action onHidden = null)
+        {
+            transform.DOScale(0f, SHOW_ANIMATION_DURATION).SetEase(Ease.OutFlash)
+                .onComplete += () => onHidden?.Invoke();
+        }
 
 
         // Подписываясь на событие кнопки, всегда создаем метод с префиксом On и постфиксом Click, как тут.

@@ -8,7 +8,7 @@ using UnityEngine.Networking;
 
 namespace DevNote
 {
-    public class AudioWebCash : MonoBehaviour, IInitializable
+    public class AudioWebCash : MonoBehaviour, IProjectInitializable
     {
         private static Dictionary<string, AudioClip> cashedClips = new Dictionary<string, AudioClip>();
 
@@ -18,10 +18,10 @@ namespace DevNote
         private bool _initialized = false;
 
 
-        bool IInitializable.Initialized => _initialized;
+        bool IProjectInitializable.Initialized => _initialized;
 
 
-        void IInitializable.Initialize()
+        void IProjectInitializable.Initialize()
         {
             LoadAllClips();
         }

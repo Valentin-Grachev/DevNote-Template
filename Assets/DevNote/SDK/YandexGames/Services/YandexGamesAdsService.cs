@@ -15,9 +15,9 @@ namespace DevNote.Services.YandexGames
 
         bool ISelectableService.Available => YG_Sdk.ServicesIsSupported;
 
-        bool IInitializable.Initialized => _initialized;
+        bool IProjectInitializable.Initialized => _initialized;
 
-        async void IInitializable.Initialize()
+        async void IProjectInitializable.Initialize()
         {
             await UniTask.WaitUntil(() => YG_Sdk.available);
             _initialized = true;

@@ -14,8 +14,8 @@ namespace DevNote.Services.YandexGames
 
         bool ISelectableService.Available => YG_Sdk.ServicesIsSupported;
 
-        bool IInitializable.Initialized => _initialized;
-        async void IInitializable.Initialize()
+        bool IProjectInitializable.Initialized => _initialized;
+        async void IProjectInitializable.Initialize()
         {
             var sdkObject = Instantiate(_yandexGamesSdkPrefab, parent: null);
             sdkObject.name = sdkObject.name.Replace("(Clone)", string.Empty);

@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace DevNote
 {
-    public class GoogleTables : MonoBehaviour, IInitializable
+    public class GoogleTables : MonoBehaviour, IProjectInitializable
     {
         public static bool Initialized => _instance._initialized;
 
@@ -32,8 +32,8 @@ namespace DevNote
 
         
 
-        bool IInitializable.Initialized => _initialized;
-        async void IInitializable.Initialize()
+        bool IProjectInitializable.Initialized => _initialized;
+        async void IProjectInitializable.Initialize()
         {
             _instance = this;
 

@@ -8,7 +8,7 @@ namespace DevNote.Services.Starter
         public event IPurchase.OnPurchaseHandled onPurchaseHandled;
 
 
-        bool IInitializable.Initialized => true;
+        bool IProjectInitializable.Initialized => true;
 
         bool ISelectableService.Available => true;
 
@@ -16,7 +16,7 @@ namespace DevNote.Services.Starter
 
         string IPurchase.GetPriceString(ProductType productType) => $"${productType}";
 
-        void IInitializable.Initialize() { }
+        void IProjectInitializable.Initialize() { }
 
         void IPurchase.Purchase(ProductType productType, Action onSuccess, Action onError)
         {

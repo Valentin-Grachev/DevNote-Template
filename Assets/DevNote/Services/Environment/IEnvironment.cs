@@ -2,7 +2,7 @@ using System;
 
 namespace DevNote
 {
-    public interface IEnvironment : IInitializable, ISelectableService
+    public interface IEnvironment : IProjectInitializable, ISelectableService
     {
         public static bool IsTest { get; set; }
         public static EnvironmentType EnvironmentType { get; set; }

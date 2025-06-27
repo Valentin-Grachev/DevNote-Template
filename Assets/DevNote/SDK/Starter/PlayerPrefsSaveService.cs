@@ -17,9 +17,9 @@ namespace DevNote.Services.Starter
 
         bool ISelectableService.Available => true;
 
-        bool IInitializable.Initialized => _initialized;
+        bool IProjectInitializable.Initialized => _initialized;
 
-        void IInitializable.Initialize()
+        void IProjectInitializable.Initialize()
         {
             var encodedData = PlayerPrefs.GetString(DATA_KEY, string.Empty);
             GameState.RestoreFromEncodedData(encodedData);

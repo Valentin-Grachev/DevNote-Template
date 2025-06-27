@@ -10,9 +10,9 @@ namespace DevNote.Services.Starter
         [SerializeField] private DeviceType _deviceType = DeviceType.Desktop;
 
 
-        bool IInitializable.Initialized => true;
+        bool IProjectInitializable.Initialized => true;
 
-        void IInitializable.Initialize() { }
+        void IProjectInitializable.Initialize() { }
 
         bool ISelectableService.Available => true;
 

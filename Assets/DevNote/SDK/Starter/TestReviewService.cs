@@ -6,9 +6,9 @@ namespace DevNote.Services.Starter
     {
         bool ISelectableService.Available => true;
 
-        bool IInitializable.Initialized => true;
+        bool IProjectInitializable.Initialized => true;
 
-        void IInitializable.Initialize() { }
+        void IProjectInitializable.Initialize() { }
 
         void IReview.Request() => Debug.Log($"{Const.LOG_PREFIX} Test review shown");
     }

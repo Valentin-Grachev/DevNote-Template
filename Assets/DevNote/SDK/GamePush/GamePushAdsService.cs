@@ -14,8 +14,8 @@ namespace DevNote.Services.GamePush
         bool ISelectableService.Available => GamePushEnvironmentService.ServicesIsAvailable;
 
 
-        bool IInitializable.Initialized => GP_Init.isReady;
-        void IInitializable.Initialize() { }
+        bool IProjectInitializable.Initialized => GP_Init.isReady;
+        void IProjectInitializable.Initialize() { }
 
         
         void IAds.ShowInterstitial(AdKey adKey, Action onShown, Action onError)

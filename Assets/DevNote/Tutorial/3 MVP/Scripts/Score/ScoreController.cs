@@ -1,24 +1,26 @@
 using UnityEngine;
+using Zenject;
 
 namespace DevNote.Tutorial.MVP
 {
-    public class ScoreController : Zenject.IInitializable
+    public class ScoreController : IInitializable
     {
         public ReactiveValue<int> CurrentScore { get; private set; } = new(0);
 
-
-        private ScoreWindowView _scoreWindow;
-        private RectTransform _windowContainer;
+        private Viewer<ScoreWindowView> _scoreWindowViewer;
 
 
 
         public ScoreController(RectTransform windowContainer)
         {
-            _windowContainer = windowContainer;
+            _scoreWindowViewer = new Viewer<ScoreWindowView>(
+                prefab: Configs.Score.ScoreWindowPrefab, 
+                container: windowContainer, 
+                mode: ViewerMode.InstantiateDestroy);
         }
 
 
-        void Zenject.IInitializable.Initialize()
+        void IInitializable.Initialize()
         {
             CurrentScore.Value = 0;
         }
@@ -33,19 +35,21 @@ namespace DevNote.Tutorial.MVP
         // Ќе переживайте - в таких случа€х Instantiate и Destroy не будут кушать много ресурсов процессора.
         public void ShowScoreWindow()
         {
-            _scoreWindow = SceneInjector.InstantiateFromPrefabComponent(Configs.Score.ScoreWindowPrefab, _windowContainer);
-            _scoreWindow.Display();
+            var scoreWindow = _scoreWindowViewer.Show();
+            scoreWindow.Display();
 
             // ќбратите внимание, что контроллеры никак не должны вмешиватьс€ в отображение View!
             // јнимации и звуки - это также полностью ответственность View.
             // «десь мы лишь посылаем ей сигнал на воспроизведение анимации.
-            _scoreWindow.DisplayShowAnimation();
+            scoreWindow.DisplayShowAnimation();
         }
 
         public void HideScoreWindow()
         {
-            if (_scoreWindow != null)
-                Object.Destroy(_scoreWindow.gameObject);
+            // јналогично как и с показом - не вмешиваемс€ в обработку анимации скрыти€ View.
+            // ѕросто посылаем ей сигнал показа анимации, а затем скрываем View. 
+            _scoreWindowViewer.View.DisplayHideAnimation(
+                onHidden: () => _scoreWindowViewer.Hide());
         }
 
 

@@ -5,23 +5,25 @@ using UnityEngine;
 namespace DevNote
 {
     [RequireComponent(typeof(TextMeshProUGUI))]
-    public class LocalizedText : ReactiveView
+    public class LocalizedText : MonoBehaviour
     {
         [SerializeField] private string _key;
 
         private TextMeshProUGUI _text;
 
-        protected override void Subscribe()
+        private void OnEnable()
         {
             Localization.OnLanguageChanged += Display;
+            Display();
         }
 
-        protected override void Dispose()
+        private void OnDisable()
         {
             Localization.OnLanguageChanged -= Display;
         }
 
-        protected override void Display()
+
+        private void Display()
         {
             if (_key == string.Empty)
             {

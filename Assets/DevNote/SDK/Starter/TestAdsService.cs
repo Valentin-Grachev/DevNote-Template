@@ -11,11 +11,11 @@ namespace DevNote.Services.Starter
 
         bool ISelectableService.Available => true;
 
-        bool IInitializable.Initialized => true;
+        bool IProjectInitializable.Initialized => true;
 
         
 
-        void IInitializable.Initialize() { }
+        void IProjectInitializable.Initialize() { }
 
         void IAds.SetBanner(bool active) {}
 
