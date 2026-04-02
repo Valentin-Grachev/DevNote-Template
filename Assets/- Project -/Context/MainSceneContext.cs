@@ -8,7 +8,7 @@ public class MainSceneContext : SceneContext
 
         
 
-
+        Initialized = true;
 
     }
 

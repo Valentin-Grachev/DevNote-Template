@@ -15,11 +15,11 @@
       "hash": "8a8fa5a9659a6d63f196391c71e06c4286c8acd7"
     },
     "com.devnote": {
-      "version": "https://github.com/Valentin-Grachev/DevNote.git?path=com.devnote",
+      "version": "https://github.com/Valentin-Grachev/DevNote.git?path=Packages/com.devnote",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "c496a151f4f7c9be34117415a8ac40d5af387b91"
+      "hash": "96bef2432dca90ad4b9f24333dfdfce6284e64d8"
     },
     "com.unity.2d.animation": {
       "version": "7.1.1",
